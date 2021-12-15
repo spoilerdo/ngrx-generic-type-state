@@ -12,6 +12,10 @@
     "declaration": false,
     "downlevelIteration": true,
     "paths": {
+      "examples": [
+        "dist/examples/examples",
+        "dist/examples"
+      ],
       "ngrx-g-load-object": [
         "dist/ngrx-g-load-object/ngrx-g-load-object",
         "dist/ngrx-g-load-object"

@@ -33,6 +33,37 @@
           }
         }
       }
+    },
+    "examples": {
+      "projectType": "library",
+      "root": "projects/examples",
+      "sourceRoot": "projects/examples/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/examples/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/examples/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/examples/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/examples/src/test.ts",
+            "tsConfig": "projects/examples/tsconfig.spec.json",
+            "karmaConfig": "projects/examples/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngrx-g-load-object"
