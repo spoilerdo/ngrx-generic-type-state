@@ -10,8 +10,8 @@ export class LoadObjectFacade<ObjectType> {
   private selector: LoadObjectSelector<ObjectType>;
   private objectActions: LoadObjectActions<ObjectType>;
 
-  public object$: Observable<ObjectType>;
-  public failure$: Observable<Error>;
+  public object$: Observable<ObjectType | null>;
+  public failure$: Observable<Error | null>;
   public isLoading$: Observable<boolean>;
 
   constructor(

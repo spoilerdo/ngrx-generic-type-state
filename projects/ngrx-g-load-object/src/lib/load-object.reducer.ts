@@ -2,9 +2,9 @@ import { createReducer, on } from "@ngrx/store";
 import { LoadObjectActions } from "./load-object.action";
 
 export interface ObjectState<ObjectType> {
-  object: ObjectType;
+  object: ObjectType | null;
   loading: boolean;
-  failure: Error;
+  failure: Error | null;
 }
 
 export const objectInitialState: ObjectState<unknown> = {
