@@ -1,0 +1,4 @@
+- make documentation of existing functionality
+- try to make it stackable, so that you can have multiple load-objects, so for delete, get, save, etc.
+- update to latest Angular version
+- add github actions to push it to NPM

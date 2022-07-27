@@ -1,40 +1,57 @@
-import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { of } from "rxjs";
-import { catchError, concatMap, map } from "rxjs/operators";
-import { LoadObjectActions } from "./load-object.action";
-import { ObjectStateConfig } from "./load-object.config";
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
+import { WithLoadingObjectActions } from './with-loading-object.actions';
+import { ObjectStateConfig } from './with-loading-object.config';
 
+/**
+ * The effect that takes place when loading an object.
+ * Extended by the implementing effect
+ */
 @Injectable()
 export class LoadObjectEffects<ObjectType> {
-  private objectActions;
-
-  loadObject$: unknown;
+  loadObjects$: unknown[] = [];
 
   constructor(
     protected readonly actions$: Actions,
-    protected readonly config: ObjectStateConfig<ObjectType>,
+    protected readonly stateConfig: ObjectStateConfig
   ) {
-    this.objectActions = new LoadObjectActions();
+    const { config } = this.stateConfig;
 
-    this.loadObject$ = createEffect(() =>
-      this.actions$.pipe(
-        ofType(this.objectActions.loadObject),
-        concatMap(() => {
-          const localObject: ObjectType | null = JSON.parse(sessionStorage.getItem(this.config.objectKey())!);
+    for (const object of Object.keys(config) as Array<string>) {
+      const objectActions = new WithLoadingObjectActions(
+        object,
+        config[object].action
+      );
 
-          if (!localObject) {
-            return this.config.LoadObjectFunc().pipe(
-              map((object: ObjectType) => {
-                return this.objectActions.loadObjectSuccess({ object })
-              }),
-              catchError((error: Error) => of(this.objectActions.loadObjectFailure({ failure: error })))
-            );
-          }
+      this.loadObjects$.push(
+        createEffect(() =>
+          this.actions$.pipe(
+            ofType(objectActions.objectAction),
+            concatMap(() => {
+              const localObject: ObjectType | null = JSON.parse(
+                sessionStorage.getItem(object)!
+              );
 
-          return of(this.objectActions.loadObjectSuccess({ object: localObject }));
-        })
-      )
-    );
+              if (!localObject) {
+                return config[object].func().pipe(
+                  map((object: ObjectType) => {
+                    return objectActions.objectActionSuccess({ object });
+                  }),
+                  catchError((error: Error) =>
+                    of(objectActions.objectActionFailure({ failure: error }))
+                  )
+                );
+              }
+
+              return of(
+                objectActions.objectActionSuccess({ object: localObject })
+              );
+            })
+          )
+        )
+      );
+    }
   }
 }

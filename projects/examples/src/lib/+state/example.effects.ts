@@ -1,10 +1,13 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { LoadObjectEffects, ObjectStateConfig } from "projects/ngrx-g-load-object/src/public-api";
-import { of } from "rxjs";
-import { catchError, concatMap, map } from "rxjs/operators";
-import { ExampleService } from "../example.service";
-import { Example } from "../models/example";
+import {
+  LoadObjectEffects,
+  ObjectStateConfig,
+} from 'projects/ngrx-g-load-object/src/public-api';
+import { of } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
+import { ExampleService } from '../example.service';
+import { Example } from '../models/example';
 
 import * as ExampleActions from './example.actions';
 
@@ -16,7 +19,9 @@ export class ExampleEffects extends LoadObjectEffects<Example> {
       concatMap((action) =>
         this.exampleService.deleteExampleById(action.id).pipe(
           map(() => ExampleActions.deleteExampleSuccess({ id: action.id })),
-          catchError((error) => of(ExampleActions.deleteExampleFailure({ failure: error })))
+          catchError((error) =>
+            of(ExampleActions.deleteExampleFailure({ failure: error }))
+          )
         )
       )
     )

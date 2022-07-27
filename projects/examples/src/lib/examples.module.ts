@@ -1,25 +1,30 @@
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { LoadObjectFacade } from 'projects/ngrx-g-load-object/src/public-api';
-import { ExampleEffects, ExampleFacade, fromExample } from '../public-api';
+import {
+  LoadObjectFacade,
+  ObjectStateConfig,
+} from 'projects/ngrx-g-load-object/src/public-api';
+import {
+  ExampleConfig,
+  ExampleEffects,
+  ExampleFacade,
+  fromExample,
+} from '../public-api';
 import { ExamplesComponent } from './examples.component';
 import { Example } from './models/example';
 
 @NgModule({
-  declarations: [
-    ExamplesComponent
-  ],
+  declarations: [ExamplesComponent],
   imports: [
     StoreModule.forRoot({ example: fromExample.exampleModuleReducer }),
-    EffectsModule.forRoot([ExampleEffects])
+    EffectsModule.forRoot([ExampleEffects]),
   ],
   providers: [
     ExampleFacade,
-    LoadObjectFacade
+    LoadObjectFacade,
+    { provide: ObjectStateConfig, useExisting: ExampleConfig },
   ],
-  exports: [
-    ExamplesComponent
-  ]
+  exports: [ExamplesComponent],
 })
-export class ExamplesModule { }
+export class ExamplesModule {}
