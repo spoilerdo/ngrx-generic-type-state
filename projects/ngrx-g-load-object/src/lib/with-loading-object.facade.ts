@@ -59,8 +59,8 @@ export class LoadObjectFacade<ObjectType> {
     selected ? selected.isLoading$ : null;
   }
 
-  public executeAction(object: string, action: string) {
+  public executeAction(object: string, action: string, args: any[]) {
     const withLoading = this.objectsActions.get(`${object} ${action}`);
-    withLoading ? this.objectStore.dispatch(withLoading.objectAction()) : console.error(`no action found with specified action (${action}) and object (${object}) `)
+    withLoading ? this.objectStore.dispatch(withLoading.objectAction(args)) : console.error(`no action found with specified action (${action}) and object (${object}) `)
   }
 }

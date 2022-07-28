@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 type WithLoadingFunc = () => Observable<any>;
 
-class WithLoadingActions {
+export class WithLoadingActions {
   constructor(public func: WithLoadingFunc, public action: string) {}
 }
 

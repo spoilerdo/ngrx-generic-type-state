@@ -32,8 +32,9 @@ export class WithLoadingObjectEffects<ObjectType> {
                   sessionStorage.getItem(object)!
                 );
 
+                //TODO: get args from config trough facade and action
                 if (!localObject) {
-                  return func().pipe(
+                  return func.apply().pipe(
                     map((object: ObjectType) => {
                       return objectActions.objectActionSuccess({ object });
                     }),
