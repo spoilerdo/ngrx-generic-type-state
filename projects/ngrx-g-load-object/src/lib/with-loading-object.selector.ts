@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { nameof } from 'ts-simple-nameof';
-import { ObjectState } from './load-object.reducer';
+import { ObjectStateConfig } from './with-loading-object.config';
+import { ObjectState } from './with-loading-object.reducer';
 
 /**
  * Selector used by the load object facade
@@ -16,9 +17,9 @@ export class LoadObjectSelector<ObjectType> {
 
   // #endregion
 
-  constructor() {
+  constructor(object: string, action: string) {
     this.objectState = createFeatureSelector<ObjectState<ObjectType>>(
-      nameof<ObjectType>((o) => o)
+      `${object} ${action}`
     );
 
     this.getObject = createSelector(
