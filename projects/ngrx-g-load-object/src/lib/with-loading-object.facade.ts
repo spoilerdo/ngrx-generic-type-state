@@ -19,17 +19,20 @@ class WithLoadingObjectSelection {
  * Imported in the module to be used
  */
 @Injectable()
-export class LoadObjectFacade<ObjectType> {
-  private objectsActions = new Map<string, WithLoadingObjectActions>;
-  public objectSelectors = new Map<string, WithLoadingObjectSelection>;
+export class LoadObjectFacade {
+  private objectsActions = new Map<string, WithLoadingObjectActions>();
+  public objectSelectors = new Map<string, WithLoadingObjectSelection>();
 
   constructor(
     { config }: ObjectStateConfig,
-    private readonly objectStore: Store<ObjectState<ObjectType>>
+    private readonly objectStore: Store<ObjectState<any>>
   ) {
     for (const object of Object.keys(config) as Array<string>) {
       for (const { action } of config[object]) {
-        this.objectsActions.set(`${object} ${action}`, new WithLoadingObjectActions(object, action));
+        this.objectsActions.set(
+          `${object} ${action}`,
+          new WithLoadingObjectActions(object, action)
+        );
 
         const selector = new LoadObjectSelector(object, action);
         this.objectSelectors.set(
@@ -60,7 +63,13 @@ export class LoadObjectFacade<ObjectType> {
   }
 
   public executeAction(object: string, action: string, args: any[]) {
+    console.log('execute action');
     const withLoading = this.objectsActions.get(`${object} ${action}`);
-    withLoading ? this.objectStore.dispatch(withLoading.objectAction(args)) : console.error(`no action found with specified action (${action}) and object (${object}) `)
+    console.log(withLoading);
+    withLoading
+      ? this.objectStore.dispatch(withLoading.objectAction(args))
+      : console.error(
+          `no action found with specified action (${action}) and object (${object}) `
+        );
   }
 }

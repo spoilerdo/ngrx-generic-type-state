@@ -15,7 +15,10 @@ export class WithLoadingObjectActions {
   //#endregion
 
   constructor(nameOfType: string, action: string) {
-    this.objectAction = createAction(`[${nameOfType}] ${action} ${nameOfType}`);
+    this.objectAction = createAction(
+      `[${nameOfType}] ${action} ${nameOfType}`,
+      props<{ args: any[] }>()
+    );
     this.objectActionSuccess = createAction(
       `[${nameOfType}] ${action} ${nameOfType} Success`,
       props<{ object: any }>() //ObjectType

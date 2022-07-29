@@ -1,6 +1,6 @@
 export class Example {
   id: string;
-  message: string
+  message: string;
 
   constructor(id: string, message: string) {
     this.id = id;

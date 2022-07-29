@@ -1,19 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { Example } from './models/example';
+import { Example } from '../models/example';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExampleService {
-  constructor(private readonly httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) {}
 
   public getExampleById(id: string): Observable<Example> {
-    return this.httpClient
-      .get("url")
-      .pipe(pluck('example'));
+    console.log(id);
+    console.log('get example by id');
+    return this.httpClient.get('url').pipe(pluck('example'));
   }
 
   public deleteExampleById(id: string): Observable<Object> {

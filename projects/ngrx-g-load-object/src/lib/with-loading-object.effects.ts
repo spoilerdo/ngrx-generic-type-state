@@ -10,7 +10,7 @@ import { ObjectStateConfig } from './with-loading-object.config';
  * Extended by the implementing effect
  */
 @Injectable()
-export class WithLoadingObjectEffects<ObjectType> {
+export class WithLoadingObjectEffects {
   loadObjects$: unknown[] = [];
 
   constructor(
@@ -22,20 +22,22 @@ export class WithLoadingObjectEffects<ObjectType> {
     for (const object of Object.keys(config) as Array<string>) {
       for (const { action, func } of config[object]) {
         const objectActions = new WithLoadingObjectActions(object, action);
+        debugger;
 
         this.loadObjects$.push(
           createEffect(() =>
             this.actions$.pipe(
               ofType(objectActions.objectAction),
-              concatMap(() => {
-                const localObject: ObjectType | null = JSON.parse(
+              concatMap(([{ args }]) => {
+                console.log(args);
+                const localObject: any | null = JSON.parse(
                   sessionStorage.getItem(object)!
                 );
 
                 //TODO: get args from config trough facade and action
                 if (!localObject) {
-                  return func.apply().pipe(
-                    map((object: ObjectType) => {
+                  return func.apply(args).pipe(
+                    map((object: any) => {
                       return objectActions.objectActionSuccess({ object });
                     }),
                     catchError((error: Error) =>
