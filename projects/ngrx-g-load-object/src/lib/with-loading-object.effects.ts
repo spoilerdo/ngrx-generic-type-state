@@ -11,6 +11,7 @@ import { ObjectStateConfig } from './with-loading-object.config';
  */
 @Injectable()
 export class WithLoadingObjectEffects {
+  //NOTE: store module is prob not expecting an array but just a simple unknown
   loadObjects$: unknown[] = [];
 
   constructor(
@@ -22,14 +23,12 @@ export class WithLoadingObjectEffects {
     for (const object of Object.keys(config) as Array<string>) {
       for (const { action, func } of config[object]) {
         const objectActions = new WithLoadingObjectActions(object, action);
-        debugger;
 
         this.loadObjects$.push(
           createEffect(() =>
             this.actions$.pipe(
               ofType(objectActions.objectAction),
               concatMap(([{ args }]) => {
-                console.log(args);
                 const localObject: any | null = JSON.parse(
                   sessionStorage.getItem(object)!
                 );
