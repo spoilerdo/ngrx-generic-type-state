@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   constructor(private readonly facade: LoadObjectFacade) {}
 
   ngOnInit() {
-    this.facade.executeAction('example', 'get', [1]);
+    // this.facade.executeAction('example', 'get', [1]);
+    this.facade.executeAction('example', 'delete', [1, true]);
   }
 }

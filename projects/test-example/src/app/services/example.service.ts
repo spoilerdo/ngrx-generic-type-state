@@ -16,7 +16,10 @@ export class ExampleService {
     return this.httpClient.get('url').pipe(pluck('example'));
   }
 
-  public deleteExampleById(id: string): Observable<Object> {
+  public deleteExampleById(id: string, force: boolean): Observable<Object> {
+    console.log(id);
+    console.log(force);
+    console.log('delete example by id');
     return this.httpClient.delete('url');
   }
 }

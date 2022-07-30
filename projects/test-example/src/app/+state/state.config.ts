@@ -17,7 +17,8 @@ export class ExampleConfig extends ObjectStateConfig {
           'get'
         ),
         new WithLoadingActions(
-          (id: string) => exampleService.deleteExampleById(id),
+          (id: string, force: boolean) =>
+            exampleService.deleteExampleById(id, force),
           'delete'
         ),
       ],

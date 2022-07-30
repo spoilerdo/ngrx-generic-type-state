@@ -11,31 +11,31 @@ import { ObjectStateConfig } from './with-loading-object.config';
  */
 @Injectable()
 export class WithLoadingObjectEffects {
-  //NOTE: store module is prob not expecting an array but just a simple unknown
-  loadObjects$: unknown[] = [];
-
   constructor(
     protected readonly actions$: Actions,
     protected readonly stateConfig: ObjectStateConfig
   ) {
     const { config } = this.stateConfig;
+    const loadObjects$: unknown[] = [];
 
     for (const object of Object.keys(config) as Array<string>) {
       for (const { action, func } of config[object]) {
         const objectActions = new WithLoadingObjectActions(object, action);
 
-        this.loadObjects$.push(
+        loadObjects$.push(
           createEffect(() =>
             this.actions$.pipe(
               ofType(objectActions.objectAction),
-              concatMap(([{ args }]) => {
+              concatMap((value) => {
                 const localObject: any | null = JSON.parse(
                   sessionStorage.getItem(object)!
                 );
 
-                //TODO: get args from config trough facade and action
                 if (!localObject) {
-                  return func.apply(args).pipe(
+                  const args = Object.values(value);
+                  args.pop();
+
+                  return func.apply(null, args).pipe(
                     map((object: any) => {
                       return objectActions.objectActionSuccess({ object });
                     }),
@@ -54,5 +54,7 @@ export class WithLoadingObjectEffects {
         );
       }
     }
+
+    Object.assign(this, loadObjects$);
   }
 }
