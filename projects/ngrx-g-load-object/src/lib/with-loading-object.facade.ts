@@ -24,17 +24,17 @@ export class LoadObjectFacade {
   public objectSelectors = new Map<string, WithLoadingObjectSelection>();
 
   constructor(
-    { config }: ObjectStateConfig,
+    { config, keys }: ObjectStateConfig,
     private readonly objectStore: Store<ObjectState<any>>
   ) {
-    for (const object of Object.keys(config) as Array<string>) {
+    for (const object of keys) {
       for (const { action } of config[object]) {
         this.objectsActions.set(
           `${object} ${action}`,
           new WithLoadingObjectActions(object, action)
         );
 
-        const selector = new LoadObjectSelector(object, action);
+        const selector = new LoadObjectSelector(object, action, keys);
         this.objectSelectors.set(
           `${object} ${action}`,
           new WithLoadingObjectSelection(

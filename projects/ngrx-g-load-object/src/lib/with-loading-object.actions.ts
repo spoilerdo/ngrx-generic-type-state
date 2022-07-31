@@ -21,7 +21,7 @@ export class WithLoadingObjectActions {
     );
     this.objectActionSuccess = createAction(
       `[${nameOfType}] ${action} ${nameOfType} Success`,
-      props<{ object: any }>() //ObjectType
+      props<{ object: any }>()
     );
     this.objectActionFailure = createAction(
       `[${nameOfType} ${action} ${nameOfType} Failure]`,

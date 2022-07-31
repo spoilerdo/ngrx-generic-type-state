@@ -12,5 +12,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // this.facade.executeAction('example', 'get', [1]);
     this.facade.executeAction('example', 'delete', [1, true]);
+    console.log(window);
+    console.log(Object.create((<any>window)['example'].prototype));
   }
 }

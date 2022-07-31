@@ -3,6 +3,7 @@ import {
   ObjectStateConfig,
   WithLoadingActions,
 } from 'projects/ngrx-g-load-object/src/public-api';
+import { Example } from '../models/example';
 import { ExampleService } from '../services/example.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ import { ExampleService } from '../services/example.service';
 export class ExampleConfig extends ObjectStateConfig {
   constructor(readonly exampleService: ExampleService) {
     super({
-      ['example']: [
+      ['Example']: [
         new WithLoadingActions(
           (id: string) => exampleService.getExampleById(id),
           'get'
@@ -22,7 +23,7 @@ export class ExampleConfig extends ObjectStateConfig {
           'delete'
         ),
       ],
-      ['explanation']: [
+      ['Explanation']: [
         new WithLoadingActions(
           (id: string) => exampleService.getExampleById(id),
           'get'
