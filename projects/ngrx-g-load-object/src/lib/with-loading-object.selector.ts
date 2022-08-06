@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ObjectStateConfig } from './with-loading-object.config';
+import { ObjectStateConfig, ObjectType } from './with-loading-object.config';
 import { ObjectState } from './with-loading-object.reducer';
 
 /**
@@ -16,9 +16,7 @@ export class LoadObjectSelector {
 
   // #endregion
 
-  constructor(object: string, action: string, keys: string[]) {
-    const type = ObjectStateConfig.getType(object, keys);
-
+  constructor(object: string, action: string, type: ObjectType) {
     this.objectState = createFeatureSelector<ObjectState<typeof type>>(
       `${object} ${action}`
     );

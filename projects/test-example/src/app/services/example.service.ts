@@ -11,15 +11,10 @@ export class ExampleService {
   constructor(private readonly httpClient: HttpClient) {}
 
   public getExampleById(id: string): Observable<Example> {
-    console.log(id);
-    console.log('get example by id');
     return this.httpClient.get('url').pipe(pluck('example'));
   }
 
-  public deleteExampleById(id: string, force: boolean): Observable<Object> {
-    console.log(id);
-    console.log(force);
-    console.log('delete example by id');
-    return this.httpClient.delete('url');
+  public deleteExampleById(id: string, force: boolean): Observable<Example> {
+    return this.httpClient.delete('url').pipe(pluck('example'));
   }
 }

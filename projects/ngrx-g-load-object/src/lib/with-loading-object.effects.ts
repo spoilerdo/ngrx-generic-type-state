@@ -19,8 +19,12 @@ export class WithLoadingObjectEffects {
     const loadObjects$: unknown[] = [];
 
     for (const object of Object.keys(config) as Array<string>) {
-      for (const { action, func } of config[object]) {
-        const objectActions = new WithLoadingObjectActions(object, action);
+      for (const { action, func, type } of config[object]) {
+        const objectActions = new WithLoadingObjectActions(
+          object,
+          action,
+          type
+        );
 
         loadObjects$.push(
           createEffect(() =>

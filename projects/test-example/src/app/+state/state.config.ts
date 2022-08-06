@@ -4,6 +4,7 @@ import {
   WithLoadingActions,
 } from 'projects/ngrx-g-load-object/src/public-api';
 import { Example } from '../models/example';
+import { Explanation } from '../models/explanation';
 import { ExampleService } from '../services/example.service';
 
 @Injectable({
@@ -14,10 +15,12 @@ export class ExampleConfig extends ObjectStateConfig {
     super({
       ['Example']: [
         new WithLoadingActions(
+          Example,
           (id: string) => exampleService.getExampleById(id),
           'get'
         ),
         new WithLoadingActions(
+          Example,
           (id: string, force: boolean) =>
             exampleService.deleteExampleById(id, force),
           'delete'
@@ -25,6 +28,7 @@ export class ExampleConfig extends ObjectStateConfig {
       ],
       ['Explanation']: [
         new WithLoadingActions(
+          Explanation,
           (id: string) => exampleService.getExampleById(id),
           'get'
         ),

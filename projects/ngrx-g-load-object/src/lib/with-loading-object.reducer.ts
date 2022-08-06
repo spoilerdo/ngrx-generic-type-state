@@ -23,8 +23,8 @@ export function createWithLoadingObjectReducers({ config }: ObjectStateConfig) {
   const actionReducerMap = new Map<string, ActionReducer<any>>();
 
   for (const object of Object.keys(config) as Array<string>) {
-    for (const { action } of config[object]) {
-      const objectActions = new WithLoadingObjectActions(object, action);
+    for (const { action, type } of config[object]) {
+      const objectActions = new WithLoadingObjectActions(object, action, type);
 
       actionReducerMap.set(
         `${object} ${action}`,

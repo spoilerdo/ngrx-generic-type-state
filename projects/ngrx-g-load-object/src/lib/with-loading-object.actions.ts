@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { ObjectType } from './with-loading-object.config';
 
 export type ActionRecord = Record<string, WithLoadingObjectActions>;
 
@@ -14,14 +15,14 @@ export class WithLoadingObjectActions {
 
   //#endregion
 
-  constructor(nameOfType: string, action: string) {
+  constructor(nameOfType: string, action: string, type: ObjectType) {
     this.objectAction = createAction(
       `[${nameOfType}] ${action} ${nameOfType}`,
       props<{ args: any[] }>()
     );
     this.objectActionSuccess = createAction(
       `[${nameOfType}] ${action} ${nameOfType} Success`,
-      props<{ object: any }>()
+      props<{ object: typeof type }>()
     );
     this.objectActionFailure = createAction(
       `[${nameOfType} ${action} ${nameOfType} Failure]`,

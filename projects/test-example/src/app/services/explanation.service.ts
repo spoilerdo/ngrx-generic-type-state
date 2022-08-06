@@ -11,8 +11,6 @@ export class ExplanationService {
   constructor(private readonly httpClient: HttpClient) {}
 
   public getExplanationById(id: string): Observable<Explanation> {
-    console.log(id);
-    console.log('get example by id');
     return this.httpClient.get('url').pipe(pluck('explanation'));
   }
 }
