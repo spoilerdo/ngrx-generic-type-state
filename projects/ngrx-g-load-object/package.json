@@ -2,8 +2,8 @@
   "name": "ngrx-g-load-object",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^12.2.0",
-    "@angular/core": "^12.2.0",
+    "@angular/common": "^13.3.11",
+    "@angular/core": "^13.3.11",
     "@ngrx/effects": "^13.0.2",
     "@ngrx/entity": "^13.0.2",
     "@ngrx/router-store": "^13.0.2",
